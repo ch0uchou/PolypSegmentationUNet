@@ -8,6 +8,7 @@ from train import iou
 def read_image(image):
     newsize = (256,256)
     image = image.resize(newsize)
+    st.image(image)
     return image
 
 def mask_parse(mask):
