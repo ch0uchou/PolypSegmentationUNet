@@ -1,5 +1,6 @@
 import streamlit as st
 import tensorflow as tf
+from tensorflow.keras.utils import CustomObjectScope
 import numpy as np
 from PIL import Image
 from train import iou
