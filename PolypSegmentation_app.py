@@ -26,7 +26,7 @@ if file is not None:
 
     image = cv2.imdecode(file_bytes, 1)
     image = cv2.resize(image, (256, 256))
-    image = x/255.0
+    image = image/255.0
 
     pre_image = model.predict(np.expand_dims(image, axis=0))[0] > 0.5
     
