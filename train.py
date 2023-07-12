@@ -1,6 +1,5 @@
 import os
 import numpy as np
-import cv2
 from glob import glob
 import tensorflow as tf
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau, CSVLogger, TensorBoard
