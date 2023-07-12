@@ -4,14 +4,16 @@ import cv2
 import tensorflow as tf
 from tensorflow.keras.utils import CustomObjectScope
 from tqdm import tqdm
-from data import load_data, tf_dataset
+from data import load_testdata, tf_dataset
 from train import iou
 
 def read_image(path):
+    file_name = os.path.basename(path)
+    name = os.path.splitext(file_name)[0]
     x = cv2.imread(path, cv2.IMREAD_COLOR)
     x = cv2.resize(x, (256, 256))
     x = x/255.0
-    return x
+    return (x , name)
 
 def read_mask(path):
     x = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
@@ -27,32 +29,37 @@ def mask_parse(mask):
 
 if __name__ == "__main__":
     ## Dataset
-    path = "TestDataset/"
-    batch_size = 8
-    (train_x, train_y), (valid_x, valid_y), (test_x, test_y) = load_data(path)
+    for _data_name in ['CVC-300', 'CVC-ClinicDB', 'Kvasir', 'CVC-ColonDB', 'ETIS-LaribPolypDB']:
+        path = 'TestDataset/{}/'.format(_data_name)
+        batch_size = 8
+        save_path = './results/{}/'.format(_data_name)
+        os.makedirs(save_path, exist_ok=True)
 
-    test_dataset = tf_dataset(test_x, test_y, batch=batch_size)
 
-    test_steps = (len(test_x)//batch_size)
-    if len(test_x) % batch_size != 0:
-        test_steps += 1
+        (test_x, test_y) = load_testdata(path)
 
-    with CustomObjectScope({'iou': iou}):
-        model = tf.keras.models.load_model("model.h5")
+        test_dataset = tf_dataset(test_x, test_y, batch=batch_size)
 
-    model.evaluate(test_dataset, steps=test_steps)
+        test_steps = (len(test_x)//batch_size)
+        if len(test_x) % batch_size != 0:
+            test_steps += 1
 
-    for i, (x, y) in tqdm(enumerate(zip(test_x, test_y)), total=len(test_x)):
-        x = read_image(x)
-        y = read_mask(y)
-        y_pred = model.predict(np.expand_dims(x, axis=0))[0] > 0.5
-        h, w, _ = x.shape
-        white_line = np.ones((h, 10, 3)) * 255.0
+        with CustomObjectScope({'iou': iou}):
+            model = tf.keras.models.load_model("model.h5")
 
-        all_images = [
-            x * 255.0, white_line,
-            mask_parse(y), white_line,
-            mask_parse(y_pred) * 255.0
-        ]
-        image = np.concatenate(all_images, axis=1)
-        cv2.imwrite(f"results/{i}.png", image)
+        model.evaluate(test_dataset, steps=test_steps)
+
+        for i, (x, y) in tqdm(enumerate(zip(test_x, test_y)), total=len(test_x)):
+            (x, name) = read_image(x)
+            y = read_mask(y)
+            y_pred = model.predict(np.expand_dims(x, axis=0))[0] > 0.5
+            h, w, _ = x.shape
+            white_line = np.ones((h, 10, 3)) * 255.0
+
+            all_images = [
+                x * 255.0, white_line,
+                mask_parse(y), white_line,
+                mask_parse(y_pred) * 255.0
+            ]
+            image = np.concatenate(all_images, axis=1)
+            cv2.imwrite(save_path+ name +".png", image)

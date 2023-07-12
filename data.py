@@ -17,6 +17,12 @@ def load_data(path, split=0.1):
 
     return (train_x, train_y), (valid_x, valid_y)
 
+def load_testdata(path):
+    images = sorted(glob(os.path.join(path, "images/*")))
+    masks = sorted(glob(os.path.join(path, "masks/*")))
+
+    return (images, masks)
+
 def read_image(path):
      path = path.decode()
      x = cv2.imread(path, cv2.IMREAD_COLOR)
