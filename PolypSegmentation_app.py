@@ -35,4 +35,4 @@ if file is not None:
     final_pre = mask_parse(pre_image)
     
     st.write("## Prediction Mask")
-    st.image(final_pre)
+    st.image(final_pre,channels="BGR")
