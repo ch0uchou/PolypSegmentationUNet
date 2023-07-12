@@ -32,6 +32,8 @@ if file is not None:
 
     pre_image = model.predict(np.expand_dims(image, axis=0))[0] > 0.5
     
+    pre_image = np(mask_parse(pre_image))
+
     final_image = cv2.imwrite("final.png",pre_image)
     st.image(final_image)
     
