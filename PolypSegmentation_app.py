@@ -36,4 +36,4 @@ if file is not None:
     pre_image = np.concatenate(pre_mask, axis=1)
 
     st.write("## Prediction Mask")
-    st.image(pre_image)
+    # st.image(pre_image)
