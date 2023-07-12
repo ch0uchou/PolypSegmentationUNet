@@ -1,5 +1,5 @@
 import streamlit as st
-from keras.models import load_model
+import tensorflow as tf
 import numpy as np
 from PIL import Image
 
@@ -17,7 +17,7 @@ st.header('Please upload an image')
 
 file = st.file_uploader('', type=['jpeg', 'jpg', 'png'])
 
-model = load_model("./model.h5")
+model = tf.keras.models.load_model("./model.h5")
 # model.evaluaate()
 
 if file is not None:
