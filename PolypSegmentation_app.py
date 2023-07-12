@@ -5,21 +5,6 @@ import cv2
 import numpy as np
 from PIL import Image
 
-def iou(y_true, y_pred):
-    def f(y_true, y_pred):
-        intersection = (y_true * y_pred).sum()
-        union = y_true.sum() + y_pred.sum() - intersection
-        x = (intersection + 1e-15) / (union + 1e-15)
-        x = x.astype(np.float32)
-        return x
-    return tf.numpy_function(f, [y_true, y_pred], tf.float32)
-
-def read_image(image):
-    newsize = (256,256)
-    image = image.resize(newsize)
-    st.image(image)
-    return image
-
 def mask_parse(mask):
     mask = np.squeeze(mask)
     mask = [mask, mask, mask]
@@ -36,16 +21,20 @@ with CustomObjectScope({'iou': iou}):
     model = tf.keras.models.load_model("model.h5")
 
 if file is not None:
-    image = Image.open(file).convert('RGB')
-    image = read_image(image)
+    image = cv2.imread(file, cv2.IMREAD_COLOR)
+    image = cv2.resize(image, (256, 256))
+    image = x/255.0
+
     pre_image = model.predict(np.expand_dims(image, axis=0))[0] > 0.5
-    st.image(mask_parse(pre_image))
-    w, h = image.size
+    
+    w, h = image.shape
     white_line = np.ones((h, 10, 3)) * 255.0
+    
     all_images = [
         image, white_line,
         mask_parse(pre_image) 
     ]
+
     final_image = np.concatenate(all_images, axis=1)
     st.write("## Prediction Mask")
-    st.image(final_image,clamp=True, channels='BGR')
+    st.image(final_image)
