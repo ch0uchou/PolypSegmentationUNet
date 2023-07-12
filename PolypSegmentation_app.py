@@ -38,7 +38,7 @@ if file is not None:
     image = Image.open(file).convert('RGB')
     image = read_image(image)
     pre_image = model.predict(np.expand_dims(image, axis=0))[0] > 0.5
-    st.image(pre_image)
+    st.image(mask_parse(pre_image))
     w, h = image.size
     white_line = np.ones((h, 10, 3)) * 255.0
     all_images = [
