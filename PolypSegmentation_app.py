@@ -5,8 +5,6 @@ import numpy as np
 from PIL import Image
 from train import iou
 
-
-
 def run(image, model):
     pre_mask = model.predict(np.expand_dims(image, axis=0))[0] > 0.5
     pre_mask = np.squeeze(pre_mask)
@@ -28,7 +26,7 @@ if file is not None:
     image = Image.open(file).convert('RGB')
     st.image(image, use_column_width=True)
 
-    # pre_mask = run(image, model)
+    pre_mask = run(image, model)
 
     st.write("## Prediction Mask")
-    # st.image(pre_mask)
+    st.image(pre_mask)
