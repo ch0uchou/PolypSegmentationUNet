@@ -22,7 +22,7 @@ file = st.file_uploader('', type=['jpeg', 'jpg', 'png'])
 
 with CustomObjectScope({'iou': iou}):
     model = tf.keras.models.load_model("model.h5")
-# model.evaluaate()
+model.evaluaate()
 
 if file is not None:
     image = Image.open(file).convert('RGB')
