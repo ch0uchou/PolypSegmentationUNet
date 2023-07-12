@@ -22,7 +22,9 @@ with CustomObjectScope({'iou': iou}):
     model = tf.keras.models.load_model("model.h5")
 
 if file is not None:
-    image = cv2.imread(file, cv2.IMREAD_COLOR)
+    file_bytes = np.asarray(bytearray(file.read()), dtype=np.uint8)
+
+    image = cv2.imdecode(file_bytes, 1)
     image = cv2.resize(image, (256, 256))
     image = x/255.0
 
