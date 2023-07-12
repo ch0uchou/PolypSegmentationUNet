@@ -19,7 +19,7 @@ def iou(y_true, y_pred):
 if __name__ == "__main__":
     ## Dataset
     path = "TrainDataset/"
-    (train_x, train_y), (valid_x, valid_y), (test_x, test_y) = load_data(path)
+    (train_x, train_y), (valid_x, valid_y) = load_data(path)
 
     ## Hyperparameters
     batch = 8

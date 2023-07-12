@@ -11,15 +11,11 @@ def load_data(path, split=0.1):
 
     total_size = len(images)
     valid_size = int(split * total_size)
-    test_size = int(split * total_size)
 
     train_x, valid_x = train_test_split(images, test_size=valid_size, random_state=42)
     train_y, valid_y = train_test_split(masks, test_size=valid_size, random_state=42)
 
-    train_x, test_x = train_test_split(train_x, test_size=test_size, random_state=42)
-    train_y, test_y = train_test_split(train_y, test_size=test_size, random_state=42)
-
-    return (train_x, train_y), (valid_x, valid_y), (test_x, test_y)
+    return (train_x, train_y), (valid_x, valid_y)
 
 def read_image(path):
      path = path.decode()
