@@ -35,7 +35,7 @@ if file is not None:
     final_pre = np.concatenate(mask_parse(pre_image))
 
     final_image = cv2.imwrite("final.png",final_pre)
-    st.image(final_image)
+    st.image(final_pre)
     
     st.write("## Prediction Mask")
     # st.image(final_image)
