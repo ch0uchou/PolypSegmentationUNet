@@ -38,7 +38,7 @@ if __name__ == "__main__":
         test_steps += 1
 
     with CustomObjectScope({'iou': iou}):
-        model = tf.keras.models.load_model("files/model.h5")
+        model = tf.keras.models.load_model("model.h5")
 
     model.evaluate(test_dataset, steps=test_steps)
 

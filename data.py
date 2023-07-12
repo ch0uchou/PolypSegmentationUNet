@@ -6,8 +6,8 @@ import tensorflow as tf
 from sklearn.model_selection import train_test_split
 
 def load_data(path, split=0.1):
-    images = sorted(glob(os.path.join(path, "images/*")))
-    masks = sorted(glob(os.path.join(path, "masks/*")))
+    images = sorted(glob(os.path.join(path, "image/*")))
+    masks = sorted(glob(os.path.join(path, "mask/*")))
 
     total_size = len(images)
     valid_size = int(split * total_size)
