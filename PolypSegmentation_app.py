@@ -3,7 +3,6 @@ import tensorflow as tf
 from tensorflow.keras.utils import CustomObjectScope
 import numpy as np
 from PIL import Image
-import cv2
 from train import iou
 
 def read_image(image):
