@@ -37,7 +37,6 @@ with CustomObjectScope({'iou': iou}):
 if file is not None:
     image = Image.open(file).convert('RGB')
     image = read_image(image)
-    h, w, _ = image.shape
     pre_image = model.predict(np.expand_dims(x, axis=0))[0] > 0.5
     white_line = np.ones((h, 10, 3)) * 255.0
     all_images = [
