@@ -17,14 +17,14 @@ st.header('Please upload an image')
 
 file = st.file_uploader('', type=['jpeg', 'jpg', 'png'])
 
-model = tf.keras.models.load_model("./model.h5")
-model.evaluaate()
+# model = tf.keras.models.load_model("./model.h5")
+# model.evaluaate()
 
 if file is not None:
     image = Image.open(file).convert('RGB')
     st.image(image, use_column_width=True)
 
-    pre_mask = run(image, model)
+    # pre_mask = run(image, model)
 
     st.write("## Prediction Mask")
-    st.image(pre_mask)
+    # st.image(pre_mask)
