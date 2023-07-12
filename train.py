@@ -36,9 +36,9 @@ if __name__ == "__main__":
     model.compile(loss="binary_crossentropy", optimizer=opt, metrics=metrics)
 
     callbacks = [
-        ModelCheckpoint("files/model.h5"),
+        ModelCheckpoint("model.h5"),
         ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=4),
-        CSVLogger("files/data.csv"),
+        CSVLogger("data.csv"),
         TensorBoard(),
         EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=False)
     ]
