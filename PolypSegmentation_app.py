@@ -17,7 +17,7 @@ st.header('Please upload an image')
 
 file = st.file_uploader('', type=['jpeg', 'jpg', 'png'])
 
-model = tf.keras.models.load_model("./model.h5")
+model = load_model("./model.h5")
 # model.evaluaate()
 
 if file is not None:
