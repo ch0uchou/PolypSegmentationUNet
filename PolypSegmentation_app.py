@@ -42,7 +42,7 @@ if file is not None:
     final = np.concatenate(all_images, axis=1)
     cv2.imwrite("final.png",final)
 
-
+    x = cv2.imread("final.png", cv2.IMREAD_COLOR)
 
     st.write("## Prediction Mask")
-    # st.image(pre_image)
+    st.image(x)
