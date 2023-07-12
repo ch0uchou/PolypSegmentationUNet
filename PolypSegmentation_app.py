@@ -2,6 +2,7 @@ import streamlit as st
 from keras.models import load_model
 import numpy as np
 from PIL import Image
+from train import iou
 
 
 def run(image, model):
@@ -14,7 +15,8 @@ st.header('Please upload an image')
 
 file = st.file_uploader('', type=['jpeg', 'jpg', 'png'])
 
-model = load_model('./model.h5')
+with CustomObjectScope({'iou': iou}):
+    model = tf.keras.models.load_model("model.h5")
 
 if file is not None:
     image = Image.open(file).convert('RGB')
