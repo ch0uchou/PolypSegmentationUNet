@@ -1,6 +1,7 @@
 import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.utils import CustomObjectScope
+import cv2
 import numpy as np
 from PIL import Image
 
