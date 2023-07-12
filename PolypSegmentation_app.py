@@ -28,7 +28,7 @@ if file is not None:
     image = cv2.resize(image, (256, 256))
     image = image/255.0
 
-    st.image(image)
+    st.image(image,channels="BGR")
 
     pre_image = model.predict(np.expand_dims(image, axis=0))[0] > 0.5
     
