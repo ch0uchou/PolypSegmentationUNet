@@ -5,12 +5,7 @@ import cv2
 import numpy as np
 from PIL import Image
 from train import iou
-
-def mask_parse(mask):
-    mask = np.squeeze(mask)
-    mask = [mask, mask, mask]
-    mask = np.transpose(mask, (1, 2, 0))
-    return mask
+from  test import mask_parse
 
 st.title('Polyp Segmentation')
 
@@ -24,7 +19,7 @@ with CustomObjectScope({'iou': iou}):
 if file is not None:
     file_bytes = np.asarray(bytearray(file.read()), dtype=np.uint8)
 
-    image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+    image = cv2.imdecode(file_bytes, 1)
     image = cv2.resize(image, (256, 256))
     image = image/255.0
 
@@ -32,8 +27,7 @@ if file is not None:
 
     pre_image = model.predict(np.expand_dims(image, axis=0))[0] > 0.5
     
-    final_pre = np.concatenate(mask_parse(pre_image))
-    st.image(final_pre)
+    final_pre = mask_parse(pre_image)
     
     st.write("## Prediction Mask")
-    # st.image(final_image)
+    st.image(final_pre)
