@@ -30,7 +30,7 @@ if file is not None:
 
     pre_image = model.predict(np.expand_dims(image, axis=0))[0] > 0.5
     
-    w, h = image.shape
+    h, w, _ = image.shape
     white_line = np.ones((h, 10, 3)) * 255.0
     
     all_images = [
