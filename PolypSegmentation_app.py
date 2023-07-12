@@ -47,4 +47,4 @@ if file is not None:
     ]
     final_image = np.concatenate(all_images, axis=1)
     st.write("## Prediction Mask")
-    st.image(final_image)
+    st.image(final_image,clamp=True, channels='BGR')
