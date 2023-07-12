@@ -30,9 +30,9 @@ if file is not None:
 
     st.image(image,channels="BGR")
 
-    pre_image = model.predict(np.expand_dims(image, axis=0))[0] > 0.5
+    pre_image = mask_parse(model.predict(np.expand_dims(image, axis=0))[0] > 0.5)
     
-    final_pre = mask_parse(pre_image)
+    final_pre = np.concatenate(pre_image, axis=1)
     
     st.write("## Prediction Mask")
     st.image(final_pre,channels="BGR")
