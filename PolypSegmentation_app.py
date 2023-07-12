@@ -27,12 +27,20 @@ if file is not None:
     image = cv2.imdecode(file_bytes, 1)
     image = cv2.resize(image, (256, 256))
     image = image/255.0
+    
+    h, w, _ = image.shape
+    white_line = np.ones((h, 10, 3)) * 255.0
 
     st.image(image,channels="BGR")
 
-    pre_image = mask_parse(model.predict(np.expand_dims(image, axis=0))[0] > 0.5)
+    pre_image = model.predict(np.expand_dims(image, axis=0))[0] > 0.5
 
-    cv2.imwrite("final.png",pre_image)
+    all_images = [
+        image * 255.0, white_line,
+        mask_parse(pre_image) * 255.0
+    ]
+    final = np.concatenate(all_images, axis=1)
+    cv2.imwrite("final.png",final)
 
     st.write("## Prediction Mask")
-    st.image(pre_image)
+    # st.image(pre_image)
