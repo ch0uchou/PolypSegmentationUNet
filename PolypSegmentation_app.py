@@ -6,8 +6,7 @@ from PIL import Image
 from train import iou
 
 def run(image, model):
-    image = cv2.resize(image, (256, 256))
-    image = image/255.0
+    image = image.resize(256,256)
     pre_mask = model.predict(np.expand_dims(image, axis=0))[0] > 0.5
     pre_mask = np.squeeze(pre_mask)
     pre_mask = [pre_mask, pre_mask, pre_mask]
