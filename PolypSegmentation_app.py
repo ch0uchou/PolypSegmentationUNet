@@ -42,8 +42,8 @@ if file is not None:
     w, h = image.size
     white_line = np.ones((h, 10, 3)) * 255.0
     all_images = [
-        image * 255.0, white_line,
-        mask_parse(pre_image) * 255.0
+        image, white_line,
+        mask_parse(pre_image) 
     ]
     final_image = np.concatenate(all_images, axis=1)
     st.write("## Prediction Mask")
