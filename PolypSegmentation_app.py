@@ -5,14 +5,17 @@ import numpy as np
 from PIL import Image
 from train import iou
 
+def mask_parse(mask):
+    mask = np.squeeze(mask)
+    mask = [mask, mask, mask]
+    mask = np.transpose(mask, (1, 2, 0))
+    return mask
+
 def run(image, model):
     newsize = (256,256)
     image = image.resize(newsize)
     pre_mask = model.predict(np.expand_dims(image, axis=0))[0] > 0.5
-    pre_mask = np.squeeze(pre_mask)
-    pre_mask = [pre_mask, pre_mask, pre_mask]
-    pre_mask = np.transpose(pre_mask, (1, 2, 0))
-    return pre_mask * 255.0
+    return pre_mask
 
 st.title('Polyp Segmentation')
 
@@ -28,6 +31,7 @@ if file is not None:
     st.image(image, use_column_width=True)
 
     pre_mask = run(image, model)
+    pre_mask = mask_parse(pre_mask) * 255.0
 
     st.write("## Prediction Mask")
-    st.image(pre_mask)
+    st.image(pre_mask, use_column_width=True)
