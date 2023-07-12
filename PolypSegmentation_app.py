@@ -31,6 +31,8 @@ if file is not None:
     st.image(image,channels="BGR")
 
     pre_image = mask_parse(model.predict(np.expand_dims(image, axis=0))[0] > 0.5)
-        
+
+    cv2.imwrite("final.png",pre_image)
+
     st.write("## Prediction Mask")
     st.image(pre_image)
