@@ -36,8 +36,8 @@ if file is not None:
     pre_image = model.predict(np.expand_dims(image, axis=0))[0] > 0.5
 
     all_images = [
-        image * 255.0
-        # mask_parse(pre_image) * 255.0
+        # image * 255.0
+        mask_parse(pre_image) * 255.0
     ]
     final = np.concatenate(all_images, axis=1)
     cv2.imwrite("final.png",final)
