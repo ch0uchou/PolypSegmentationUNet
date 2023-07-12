@@ -4,6 +4,7 @@ from tensorflow.keras.utils import CustomObjectScope
 import cv2
 import numpy as np
 from PIL import Image
+from train import iou
 
 def mask_parse(mask):
     mask = np.squeeze(mask)
