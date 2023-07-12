@@ -2,7 +2,6 @@ import streamlit as st
 from keras.models import load_model
 import numpy as np
 from PIL import Image
-from train import iou
 
 
 def run(image, model):
