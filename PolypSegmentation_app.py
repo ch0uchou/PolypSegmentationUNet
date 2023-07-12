@@ -5,7 +5,12 @@ import cv2
 import numpy as np
 from PIL import Image
 from train import iou
-from  test import mask_parse
+
+def mask_parse(mask):
+    mask = np.squeeze(mask)
+    mask = [mask, mask, mask]
+    mask = np.transpose(mask, (1, 2, 0))
+    return mask
 
 st.title('Polyp Segmentation')
 
