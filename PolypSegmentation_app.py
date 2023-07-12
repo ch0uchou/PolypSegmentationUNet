@@ -10,7 +10,7 @@ def run(image, model):
     pre_mask = np.squeeze(pre_mask)
     pre_mask = [pre_mask, pre_mask, pre_mask]
     pre_mask = np.transpose(pre_mask, (1, 2, 0))
-    return pre_mask
+    return pre_mask * 255
 
 st.title('Polyp Segmentation')
 
